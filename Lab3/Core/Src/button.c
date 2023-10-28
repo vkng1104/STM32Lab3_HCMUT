@@ -30,15 +30,18 @@ void getOneKeyInput(int buttonNo, GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin) {
 	keyReg0[buttonNo] = keyReg1[buttonNo];
 	keyReg1[buttonNo] = keyReg2[buttonNo];
 	keyReg2[buttonNo] = HAL_GPIO_ReadPin(GPIOx, GPIO_Pin);
-	if (keyReg0[buttonNo] == keyReg1[buttonNo] && keyReg1[buttonNo] == keyReg2[buttonNo]) {
-		if(keyReg3[buttonNo] != keyReg2[buttonNo]) {
+	if ((keyReg0[buttonNo] == keyReg1[buttonNo])
+			&& (keyReg1[buttonNo] == keyReg2[buttonNo])) {
+		if (keyReg3[buttonNo] != keyReg2[buttonNo]) {
+			keyReg3[buttonNo] = keyReg2[buttonNo];
 			if (keyReg2[buttonNo] == PRESSED_STATE) {
 				// todo
 				subKeyProcess(buttonNo);
 				button_counter[buttonNo] = 200;
 			} else {
 				button_counter[buttonNo]--;
-				if (button_counter[buttonNo] == 0) keyReg3[buttonNo] = NORMAL_STATE;
+				if (button_counter[buttonNo] == 0)
+					keyReg3[buttonNo] = NORMAL_STATE;
 			}
 		}
 	}
@@ -50,16 +53,16 @@ void getKeyInput() {
 	getOneKeyInput(3, Button3_GPIO_Port, Button3_Pin);
 }
 
-int isButtonPressed(int button) {
-	if (button > NO_BUTTONS) return 0;
+int isButtonPressed(int buttonNo) {
+	if (buttonNo > NO_BUTTONS)
+		return 0;
 
-	if (button_flag[button] == 1) {
-		button_flag[button] = 0;
+	if (button_flag[buttonNo] == 1) {
+		button_flag[buttonNo] = 0;
 		return 1;
 	}
 	return 0;
 }
-
 
 void subKeyProcess(int buttonNo) {
 	button_flag[buttonNo] = 1;
