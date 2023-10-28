@@ -65,3 +65,7 @@ ctrlp.root
 
 #html
 *.html
+
+#proteus backup files
+.workspace
+.pdsbak
