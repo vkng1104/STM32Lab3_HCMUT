@@ -98,6 +98,7 @@ int main(void) {
 	initButton();
 	while (1) {
 		fsm_automatic_run();
+		fsm_manual_run();
 		display7SegmentLight();
 		/* USER CODE END WHILE */
 
